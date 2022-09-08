@@ -1,8 +1,8 @@
 {
-  "name": "node-template",
+  "name": "node-practiceyt",
   "version": "1.0.0",
   "type": "module",
-  "description": "Base template for projects developed on the Node.JS Course by LearnThis",
+  "description": "Practice project for NodeJS Youtube Course",
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
@@ -17,6 +17,17 @@
     "url": "https://github.com/Boamorte8"
   },
   "license": "ISC",
+  "dependencies": {
+    "@sinclair/typebox": "0.24.38",
+    "ajv": "8.11.0",
+    "ajv-errors": "3.0.0",
+    "ajv-formats": "2.1.1",
+    "dotenv": "16.0.2",
+    "express": "4.18.1",
+    "jose": "4.9.2",
+    "mongoose": "6.5.5",
+    "nanoid": "4.0.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "17.1.2",
     "@commitlint/config-conventional": "17.1.0",
@@ -33,7 +44,11 @@
     "prettier": "2.7.1"
   },
   "imports": {
-    "#Lib/*": "./src/lib/*"
+    "#Config/*": "./src/config/*",
+    "#Controllers/*": "./src/controllers/*",
+    "#Dto/*": "./src/dto/*",
+    "#Routes/*": "./src/routes/*",
+    "#Schemas/*": "./src/schemas/*"
   },
   "lint-staged": {
     "*.js": "eslint --fix",

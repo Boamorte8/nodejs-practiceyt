@@ -1,3 +1,15 @@
-import { printHello } from '#Lib/hello.js';
+import '#Config/env.js';
+import connectDB from '#Config/db.js';
+import httpServer from '#Config/http.js';
 
-printHello();
+const PORT = process.env.PORT || 3000;
+
+const bootstrap = async () => {
+  await connectDB(process.env.MONGODB_URL);
+
+  httpServer.listen(PORT, () =>
+    console.log(`Server listening at port ${PORT}`)
+  );
+};
+
+bootstrap();
