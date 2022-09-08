@@ -1,11 +1,11 @@
 import express from 'express';
 
+import userRouter from '#Routes/user.routes.js';
+
 const expressApp = express();
 
 expressApp.use(express.json());
-expressApp.use(express.text());
 
-// expressApp.use('/account', accountRouter);
-// expressApp.use('/auth', authRouter);
+expressApp.use('/user', userRouter);
 
 export default expressApp;
