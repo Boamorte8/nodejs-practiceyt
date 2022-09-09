@@ -9,11 +9,11 @@ const userLoginController = async (req, res) => {
   try {
     const userByEmail = await UserModel.findOne({ email }).exec();
     if (!userByEmail)
-      return res.status(401).send('Email y/o password are wrong');
+      return res.status(401).send({ errors: ['Email y/o password are wrong'] });
 
     const matchPassword = await compare(password, userByEmail.password);
     if (!matchPassword)
-      return res.status(401).send('Email y/o password are wrong');
+      return res.status(401).send({ errors: ['Email y/o password are wrong'] });
 
     const jwtConstructor = new SignJWT({ id: userByEmail._id });
     const encoder = new TextEncoder();
@@ -28,7 +28,7 @@ const userLoginController = async (req, res) => {
       jwt,
     });
   } catch (error) {
-    return res.status(401).send('Error authenticating user');
+    return res.status(401).send({ errors: ['Error authenticating user'] });
   }
 };
 

@@ -5,13 +5,13 @@ const userUpdateDataController = async (req, res) => {
   const { name, surname } = req.body;
   try {
     const user = await UserModel.findById(id).exec();
-    if (!user) return res.status(401).send('No authorized user');
+    if (!user) return res.status(401).send({ errors: ['No authorized user'] });
     user.name = name;
     user.surname = surname;
     await user.save();
     return res.send('User was updated successfully');
   } catch (error) {
-    return res.status(400).send('Error updating data');
+    return res.status(400).send({ errors: ['Error updating data'] });
   }
 };
 

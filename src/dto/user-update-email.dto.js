@@ -3,7 +3,7 @@ import addErrors from 'ajv-errors';
 import Ajv from 'ajv';
 import { Type } from '@sinclair/typebox';
 
-import { emailDTOSchema, passwordDTOSchema } from '#Lib/dto-types.js';
+import { emailDTOSchema, passwordDTOSchema } from '#Dto/dto-types.js';
 
 const UpdateEmailDTOSchema = Type.Object(
   {

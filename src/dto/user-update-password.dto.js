@@ -2,7 +2,7 @@ import addErrors from 'ajv-errors';
 import Ajv from 'ajv';
 import { Type } from '@sinclair/typebox';
 
-import { passwordDTOSchema } from '#Lib/dto-types.js';
+import { passwordDTOSchema } from '#Dto/dto-types.js';
 
 const UpdatePasswordDTOSchema = Type.Object(
   {
