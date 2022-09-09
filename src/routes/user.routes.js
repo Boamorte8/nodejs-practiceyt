@@ -1,69 +1,48 @@
 import { Router } from 'express';
 
-import UserModel from '#Schemas/user.schema.js';
+import userJWTDTO from '#Dto/user-jwt.dto.js';
+import userLoginController from '#Controllers/user-login.controller.js';
+import userLoginDTO from '#Dto/user-login.dto.js';
+import userProfileController from '#Controllers/user-profile.controller.js';
+import userRegisterController from '#Controllers/user-register.controller.js';
+import userRegisterDTO from '#Dto/user-register.dto.js';
+import userUnregisterController from '#Controllers/user-unregister.controller.js';
+import userUnregisterDTO from '#Dto/user-unregister.dto.js';
+import userUpdateDataController from '#Controllers/user-update-data.controller.js';
+import userUpdateDataDTO from '#Dto/user-update-data.dto.js';
+import userUpdateEmailController from '#Controllers/user-update-email.controller.js';
+import userUpdateEmailDTO from '#Dto/user-update-email.dto.js';
+import userUpdatePasswordController from '#Controllers/user-update-password.controller.js';
+import userUpdatePasswordDTO from '#Dto/user-update-password.dto.js';
 
 const userRouter = Router();
 
-userRouter.post('/register', async (req, res) => {
-  const { guid, name } = req.body;
-
-  try {
-    const user = await UserModel.findById(guid).exec();
-    if (user) return res.status(409).send('Account already exists');
-    if (!name || !guid)
-      return res.status(400).send('Name and guid are required');
-
-    const newUser = new UserModel({ _id: guid, name });
-
-    await newUser.save();
-    return res.send('Account created successfully');
-  } catch (error) {
-    return res.status(400).send('Error creating account');
-  }
-});
-
-userRouter.post('/login');
-
-userRouter.get('/profile', async (req, res) => {
-  const { guid } = req.params;
-  try {
-    const account = await UserModel.findById(guid).exec();
-    if (!account) return res.status(404).send('No account found');
-    return res.send(account);
-  } catch (error) {
-    return res.status(400).send('Error getting account');
-  }
-});
-
-userRouter.patch('/update-data', async (req, res) => {
-  const { guid } = req.params;
-  const { name } = req.body;
-  if (!name) return res.status(400).send('Name is required');
-  try {
-    const account = await UserModel.findById(guid).exec();
-    if (!account) return res.status(404).send('No account found');
-    account.name = name;
-    await account.save();
-    return res.send('Account updated successfully');
-  } catch (error) {
-    return res.status(400).send('Error getting account');
-  }
-});
-
-userRouter.patch('/update-email');
-userRouter.patch('/update-password');
-
-// Delete an account
-userRouter.delete('/unregister', async (req, res) => {
-  const { guid } = req.params;
-  try {
-    const account = await UserModel.findById(guid).exec();
-    if (!account) return res.status(404).send('No account found');
-    await account.remove();
-    return res.send('Account deleted successfully');
-  } catch (error) {
-    return res.status(400).send('Error deleting account');
-  }
-});
+userRouter.post('/register', userRegisterDTO, userRegisterController);
+userRouter.post('/login', userLoginDTO, userLoginController);
+userRouter.get('/profile', userJWTDTO, userProfileController);
+userRouter.patch(
+  '/update-data',
+  userJWTDTO,
+  userUpdateDataDTO,
+  userUpdateDataController
+);
+userRouter.patch(
+  '/update-email',
+  userJWTDTO,
+  userUpdateEmailDTO,
+  userUpdateEmailController
+);
+userRouter.patch(
+  '/update-password',
+  userJWTDTO,
+  userUpdatePasswordDTO,
+  userUpdatePasswordController
+);
+userRouter.delete(
+  '/unregister',
+  userJWTDTO,
+  userUnregisterDTO,
+  userUnregisterController
+);
 
 export default userRouter;
