@@ -1,9 +1,8 @@
-import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { join, dirname } from 'path';
 
 const fileGetTextController = async (req, res) => {
-  const basePath = import.meta.url;
-  const customDirname = dirname(fileURLToPath(basePath));
+  const customDirname = dirname(fileURLToPath(import.meta.url));
   const pathText = join(customDirname, '../../static/docs/test.txt');
   try {
     return res.sendFile(pathText);
