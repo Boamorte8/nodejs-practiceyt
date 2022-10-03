@@ -15,8 +15,11 @@ expressApp.use(express.static(join(customDirname, '../public')));
 expressApp.use('/user', userRouter);
 expressApp.use('/file', fileRouter);
 
-expressApp.use((req, res, next) => {
-  res.status(404).send({ errors: ['Endpoint not found'] });
+// Middleware to handle errors
+expressApp.use((err, req, res, next) => {
+  return res
+    .status(404)
+    .send({ errors: [err.message || 'Endpoint not found'] });
 });
 
 export default expressApp;
